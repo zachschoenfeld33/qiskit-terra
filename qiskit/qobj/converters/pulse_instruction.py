@@ -448,6 +448,9 @@ class QobjToInstructionConverter:
         """
         t0 = instruction.t0
         channel = self.get_channel(instruction.ch)
+        # convert amp to complex number for schedule
+        amp = instruction.parameters['amp']
+        instruction.parameters['amp'] = amp[0]+1j*amp[1]
         command = ParametricPulseShapes[instruction.pulse_shape].value(**instruction.parameters)
         return command(channel) << t0
 
